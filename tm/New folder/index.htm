@@ -1,0 +1,107 @@
+<!--?php
+   include("config.php");
+   session_start();
+   
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      
+      $myusername = mysqli_real_escape_string($db,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
+	  
+	   $query = "update employ set Number=1";
+       $result = mysqli_query($db,$query) or die('Error: ' . mysqli_error($db));
+	  
+	   $query = "update employ set Number=99 where Employ_Name='$myusername' and Password='$mypassword'";
+       $result = mysqli_query($db,$query) or die('Error: ' . mysqli_error($db));
+      
+      $sql = "SELECT Employ_Id FROM employ WHERE Employ_Name = '$myusername' and Password = '$mypassword'";
+      $result = mysqli_query($db,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      //$active = $row['active'];
+      
+      $count = mysqli_num_rows($result);
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+		
+      if($count == 1) {
+        // session_register("myusername");
+         $_SESSION['login_user'] = $myusername;
+         
+         header("location: index1.html");
+      }else {
+          
+
+          $message = "Your Login Name or Password is invalid";
+          echo "<script type='text/javascript'-->
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body>alert('$message');";
+      }
+   }
+?&gt;
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Purple Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="index_files/materialdesignicons.css">
+  <link rel="stylesheet" href="index_files/perfect-scrollbar.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="index_files/font-awesome.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="index_files/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="file:///C:/Users/SH0C83033/Downloads/free-bundle-2019-1.0.0/free-bundle-2019-1.0.0/060%20PurpleAdmin-Free-Admin-Template-master/images/favicon.png">
+
+
+
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+      <div class="row">
+        <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
+          <div class="card col-lg-4 mx-auto">
+            <div class="card-body px-5 py-5">
+              <h3 class="card-title text-left mb-3">Login</h3>
+              <form>
+                <div class="form-group" name="username">
+                  <label>USERNAME</label>
+                  <input type="text" class="form-control p_input">
+                </div>
+                <div class="form-group" name="password">
+                  <label>PASSWORD</label>
+                  <input type="text" class="form-control p_input">
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+                </div>
+                <div class="d-flex">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- row ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="index_files/jquery.js"></script>
+  <script src="index_files/popper.js"></script>
+  <script src="index_files/bootstrap.js"></script>
+  <script src="index_files/perfect-scrollbar.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="index_files/off-canvas.js"></script>
+  <script src="index_files/misc.js"></script>
+  <!-- endinject -->
+
+
+
+</body></html>
